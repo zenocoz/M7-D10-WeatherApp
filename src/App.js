@@ -26,24 +26,36 @@ function App() {
   // }, [])
 
   const [coords, setCoords] = useState({ latitude: 0, longitude: 0 })
+  const [weatherInfo, setWeatherInfo] = useState({})
+
   useEffect(() => {
     navigator.geolocation.getCurrentPosition(function (position) {
       const {
         coords: { latitude, longitude },
       } = position
       setCoords({ latitude, longitude })
+      oneCall(latitude, longitude)
     })
-    oneCall(coords.latitude, coords.longitude)
   }, [])
 
   const oneCall = async (lat, lon) => {
-    let response = await fetch(
-      `https://api.openweathermap.org/data/2.5/onecall?lat=${coords.latitude}&lon=${coords.longitude}&appid=${process.env.API_KEY}`, {
-        method: 'GET',
-        Headers: 
+    console.log({ lat, lon })
+    try {
+      let response = await fetch(
+        `https://api.openweathermap.org/data/2.5/onecall?lat=${lat}&lon=${lon}&appid=${process.env.REACT_APP_API_KEY}`
+      )
+      if (response.ok) {
+        let data = await response.json()
+        setWeatherInfo({ ...data })
+      } else {
+        console.log("something went wrong")
       }
-    ) 
+    } catch (error) {
+      console.log(error)
+    }
   }
+
+  console.log("weatherInfo", weatherInfo)
 
   console.log("latitude is", coords.latitude)
   console.log("longitude is", coords.longitude)
@@ -56,9 +68,9 @@ function App() {
             {/* <div>
               latitude: {coords.latitude}, longitude: {coords.longitude}
             </div> */}
-            <MyNav />
+            <MyNav weatherInfo={weatherInfo} />
             <Route>
-              <Home />
+              <Home weatherInfo={weatherInfo} />
             </Route>
           </Col>
         </Row>

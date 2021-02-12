@@ -1,7 +1,8 @@
 import React from "react"
 import { Container, Row, Col, Nav } from "react-bootstrap"
+import CurrentPlace from "../CurrentPlace/CurrentPlace"
 
-export default function Home() {
+export default function Home(props) {
   return (
     <Container>
       <Row>
@@ -33,6 +34,9 @@ export default function Home() {
             </Nav.Item>
           </Nav>
         </Col>
+      </Row>
+      <Row>
+        <CurrentPlace weatherInfo={props.weatherInfo} />
       </Row>
     </Container>
   )
