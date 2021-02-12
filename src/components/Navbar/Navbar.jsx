@@ -7,9 +7,10 @@ export default function MyNav() {
       <Navbar bg="dark" variant="dark">
         <Navbar.Brand href="#home">Weather App</Navbar.Brand>
         <Nav className="mr-auto">
-          <Nav.Link href="#home">Home</Nav.Link>
-          <Nav.Link href="#features">Features</Nav.Link>
-          <Nav.Link href="#pricing">Pricing</Nav.Link>
+          <Nav.Link href="#home">
+            <span>City </span>
+            <span>temperature and icon</span>
+          </Nav.Link>
         </Nav>
         <Form inline>
           <FormControl type="text" placeholder="Search" className="mr-sm-2" />

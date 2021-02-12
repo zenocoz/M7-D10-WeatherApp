@@ -5,16 +5,21 @@ import { useState, useEffect } from "react"
 import MyNav from "./components/Navbar/Navbar"
 
 function App() {
-  const [latitude, setLatitude] = useState(0)
-  const [longitude, setLongitude] = useState(0)
+  const [coordinates, setCoordinates] = useState({
+    latitude: 0.0,
+    longitude: 0.0,
+  })
 
   useEffect(() => {
     navigator.geolocation.getCurrentPosition(function (position) {
-      setLatitude(position.coords.latitude)
-      setLongitude(position.coords.longitude)
-      console.log("Latitude is :", latitude)
-      console.log("Longitude is :", longitude)
+      setCoordinates({
+        ...coordinates,
+        latitude: position.coords.latitude,
+        longitude: position.coords.longitude,
+      })
     })
+    console.log("latitude is", coordinates.latitude)
+    console.log("longitude is", coordinates.longitude)
   }, [])
 
   return (
